@@ -135,26 +135,17 @@ const AdminAddStudent = () => {
     const [fatherMobileNumber, setFatherMobileNumber] = useState('')
     const [error, setError] = useState({})
 
-    const formHandler = (e) => {
+    const formHandler = async (e) => {
         e.preventDefault();
-        /*
-        const myForm = new FormData();
-        myForm.append("name",name);
-        myForm.append("year",year);
-        myForm.append("section",section);
-        myForm.append("department",department);
-        myForm.append("studentMobileNumber",studentMobileNumber);
-        myForm.append("email",email);
-        myForm.append("fatherName",fatherName);
-        myForm.append("fatherMobileNumber",fatherMobileNumber);        
-        myForm.append("avatar",avatar);
-        console.log(myForm);
-        */
         
-        const password = "student";
-        dispatch(adminAddStudent({name,year,section,department,registrationNumber,studentMobileNumber,email,fatherName,fatherMobileNumber,password}));
-        alert.success("Student Registration Successful");
-        navigate('/admin/students');
+        const password = process.env.REACT_APP_STUDENT_DEFAULT_PASSWORD;
+        const result = await dispatch(adminAddStudent({name,year,section,department,registrationNumber,studentMobileNumber,email,fatherName,fatherMobileNumber,password}));
+        if (result.success) {
+            alert.success("Student Registration Successful");
+            navigate('/admin/students');
+          } else {
+            alert.error(result.error?.message || "Student registration failed");
+          }
     }
 
     return(

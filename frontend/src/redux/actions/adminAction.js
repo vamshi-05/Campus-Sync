@@ -100,16 +100,21 @@ export const adminGetAllSubjects = () => {
 export const adminAddFaculty = (facultyCredential) => {
   return async (dispatch) => {
     try {
+      console.log(facultyCredential)
       const { data } = await axios.post(
         `${process.env.REACT_APP_BASE_URL}api/admin/addFaculty`,
         facultyCredential
       );
+      console.log(data)
       dispatch(adminAddFacultyFlag(true));
+      return { success: true };
     } catch (err) {
+      console.log(err.response.data)
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data,
       });
+      return { success: false };
     }
   };
 };
@@ -122,11 +127,13 @@ export const adminAddStudent = (studentCredential) => {
         studentCredential
       );
       dispatch(adminAddStudentFlag(true));
+      return { success: true };
     } catch (err) {
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data,
       });
+      return { success: false };
     }
   };
 };

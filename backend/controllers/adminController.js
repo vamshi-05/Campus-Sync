@@ -216,7 +216,7 @@ exports.addFaculty = async (req, res, next) => {
     if (!isValid) {
       return res.status(400).json(errors);
     }
-    const { name, email, password, designation, department,registrationNumber, facultyMobileNumber } =
+    const { name, email, password, designation, department,registrationNumber, facultyMobileNumber,joiningYear } =
       req.body;
 
     const faculty = await Faculty.findOne({ email });
@@ -252,6 +252,7 @@ exports.addFaculty = async (req, res, next) => {
     await newFaculty.save();
     res.status(200).json({ result: newFaculty });
   } catch (err) {
+    console.log(err)
     res
       .status(400)
       .json({ message: `Error in adding new Faculty", ${err.message}` });

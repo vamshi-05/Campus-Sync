@@ -95,6 +95,7 @@ const AdminGetFaculty = () => {
         e.preventDefault();
         setIsLoading(true);
         dispatch(adminGetAllFaculty({department}));
+        setIsLoading(false);
     }
 
     const columns = [

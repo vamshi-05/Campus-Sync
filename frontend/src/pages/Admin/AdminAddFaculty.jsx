@@ -122,7 +122,9 @@ width: 100%;
 const AdminAddFaculty = () => {
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
+    const [joiningYear,setJoiningYear] = useState("");
     const [department,setDepartment] = useState("");
+    const [registrationNumber,setRegistrationNumber] = useState("");
     const [designation,setDesignation] = useState("");
     const [facultyMobileNumber, setFacultyMobileNumber] = useState('')
     const [error, setError] = useState({})
@@ -133,12 +135,17 @@ const AdminAddFaculty = () => {
     const admin = useSelector((store) => store.admin);
 
 
-    const formHandler = (e) => {
+    const formHandler = async (e) => {
         e.preventDefault();
-    
-        dispatch(adminAddFaculty({name,designation,department,facultyMobileNumber,email}));
-        alert.success("Faculty Registration Successful");
-        navigate('/admin/faculties');
+        const password = process.env.REACT_APP_FACULTY_DEFAULT_PASSWORD;
+        const result = await dispatch(adminAddFaculty({name,designation,registrationNumber, password, department,facultyMobileNumber,email,joiningYear}));
+      
+        if (result.success) {
+            alert.success("Faculty Registration Successful");
+            navigate('/admin/faculties');
+          } else {
+            alert.error(result.error?.message || "Faculty registration failed");
+          }
     }
    
     return(
@@ -153,6 +160,10 @@ const AdminAddFaculty = () => {
                     Add Faculty
                  </ProfileHeader>
                  <ProfileForm encType='multiform/form-data' onSubmit={formHandler}>
+                 <ProfileName>
+                        <Class/>
+                        <ProfileInput type="text" onChange = {(e) => setRegistrationNumber(e.target.value)} placeholder="Registration Number..." required name="name" value={registrationNumber}/>
+                    </ProfileName>
                    <ProfileName>
                          <Face/>
                          <ProfileInput type="text" onChange = {(e) => setName(e.target.value)} placeholder="Faculty Name" required name="name" value={name}/>
@@ -179,6 +190,10 @@ const AdminAddFaculty = () => {
                      <ProfileName>
                          <SupervisorAccount/>
                          <ProfileInput onChange = {(e) => setDesignation(e.target.value)} type="text" placeholder="Designation" required name="designation" value={designation}/>
+                     </ProfileName>
+                     <ProfileName>
+                         <SupervisorAccount/>
+                         <ProfileInput onChange = {(e) => setJoiningYear(e.target.value)} type="text" placeholder="Joining Year" required name="joiningYear" value={joiningYear}/>
                      </ProfileName>
                      <ProfileButton type="submit">
                          Add Faculty
