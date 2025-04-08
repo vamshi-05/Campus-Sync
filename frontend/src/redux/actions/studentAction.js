@@ -102,6 +102,7 @@ export const studentLogin = (studentCredentials) => {
       const decoded = jwt_decode(token);
       dispatch(setStudent(decoded));
     } catch (err) {
+      console.log(err)
       dispatch({
         type: SET_ERRORS_HELPER,
         payload: err.response.data,

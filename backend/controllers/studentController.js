@@ -24,14 +24,17 @@ const validateOTP = require("../validation/otpValidation");
 const { markAttendance } = require("./facultyController");
 
 exports.studentLogin = async (req, res, next) => {
+  console.log("0")
   const { errors, isValid } = validateStudentLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
+  
+  console.log("1")
   const { registrationNumber, password } = req.body;
 
   const student = await Student.findOne({ registrationNumber });
+  console.log(student)
   if (!student) {
     errors.registrationNumber = "Registration number not found";
     return res.status(404).json(errors);
