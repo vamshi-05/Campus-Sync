@@ -152,7 +152,7 @@ const LoginPage = ({ role }) => {
                                         label="Enter your Roll Number"
                                         name="rollNumber"
                                         autoComplete="off"
-                                        type="number"
+                                        type="text"
                                         autoFocus
                                         error={rollNumberError}
                                         helperText={rollNumberError && 'Roll Number is required'}

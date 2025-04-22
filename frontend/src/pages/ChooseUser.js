@@ -32,6 +32,7 @@ const ChooseUser = ({ visitor }) => {
         const fields = { email, password }
         setLoader(true)
         dispatch(loginUser(fields, user))
+        setLoader(false)
       }
       else {
         navigate('/Adminlogin');
@@ -45,6 +46,7 @@ const ChooseUser = ({ visitor }) => {
         const fields = { rollNum, studentName, password }
         setLoader(true)
         dispatch(loginUser(fields, user))
+        setLoader(false)
       }
       else {
         navigate('/Studentlogin');
@@ -57,6 +59,7 @@ const ChooseUser = ({ visitor }) => {
         const fields = { email, password }
         setLoader(true)
         dispatch(loginUser(fields, user))
+        setLoader(false)
       }
       else {
         navigate('/Teacherlogin');
